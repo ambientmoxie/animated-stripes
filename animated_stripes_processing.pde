@@ -42,9 +42,6 @@ color[] colors;
 boolean isHorizontal;
 
 // Animation related var.
-
-int incr;
-int speed = 2;
 boolean isAnimated;
 
 void setup() {
@@ -64,7 +61,10 @@ void draw() {
 
   for (int i = 0; i < shapes.size(); i++) {
     Shape shape = shapes.get(i);
-    shape.display(incr);
+    shape.display();
+    if (isAnimated) {
+      shape.animate();
+    }
   }
 
   // Draw the selector
@@ -72,12 +72,7 @@ void draw() {
   if (selection) {
     drawSelector();
   }
-  
-  // Animate the array
 
-  if (isAnimated) {
-    incr += speed;
-  }
 }
 
 void createArrayOfColors(boolean isHorizontal) {
@@ -135,6 +130,9 @@ class Shape {
   boolean isHorizontal;
 
   color[] blk_color;
+  
+  int incr;
+  int speed = 2;
 
   Shape(int w, int h, int mspX, int mspY, int mepX, int mepY, boolean orientation, color[] colors) {
     blk_width = w;
@@ -146,8 +144,12 @@ class Shape {
     isHorizontal = orientation;
     blk_color = colors;
   }
+  
+  void animate() {
+    incr += speed;
+  }
 
-  void display(int incr) {
+  void display() {
 
     noFill();
     strokeWeight(2);
